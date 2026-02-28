@@ -4,11 +4,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        BreathingActivity breathingActivity = new BreathingActivity(6);
+        BreathingActivity breathingActivity = new BreathingActivity(4);
         ListingActivity listingActivity = new ListingActivity();
         ReflectionActivity reflectionActivity = new ReflectionActivity();
         bool running = true;
         string input;
+        Console.Clear();
+        Console.WriteLine("Loading...");
+        breathingActivity.ProgressBarFor(3, Console.BufferWidth);
+
         while (running)
         {
             DisplayMenu();

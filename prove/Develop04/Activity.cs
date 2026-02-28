@@ -25,7 +25,7 @@ public class Activity
         Console.CursorVisible = false;
         Console.Clear();
         Console.WriteLine("Get Ready...");
-        ThrobberFor(4);
+        ThrobberFor(2);
         Console.Clear();
     }
 
@@ -36,7 +36,15 @@ public class Activity
 
     public void DisplayEndMessage()
     {
-        Console.WriteLine("temporary end message");
+        Console.WriteLine("Well done!!");
+        ThrobberFor(2);
+        Console.WriteLine();
+        Console.Write($"Your have completed another {_time} seconds of the {_name}. ");
+        ThrobberFor(2);
+        Console.Clear();
+        Console.WriteLine("Returning to the main menu.");
+        ProgressBarFor(2, Console.BufferWidth);
+        Console.Clear();
     }
 
     public void CountDownFor(int seconds)

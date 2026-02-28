@@ -25,13 +25,22 @@ public class ListingActivity : Activity
         Console.WriteLine("Write as many responses as you can to the following prompt:");
         Console.WriteLine($"--- {GetNextPrompt()} ---");
         Console.Write("Your may begin in: ");
-        CountDownFor(6);
+        CountDownFor(5);
+        Console.WriteLine();
+
         entries = 0;
-        int duration = getActivityTime();
-        for (int i = 0; i < 10; i++)
+        DateTime listingEndTime = DateTime.Now.AddSeconds(getActivityTime());
+        Console.CursorVisible = true;
+        while (DateTime.Now < listingEndTime)
         {
-            entries++;
+            Console.Write("> ");
+            if (Console.ReadLine().Length > 0)
+            {
+                entries++;
+            }
         }
+        Console.CursorVisible = false;
+        Console.WriteLine($"You listed {entries} items!");
 
         DisplayEndMessage();
     }
