@@ -1,5 +1,5 @@
 using System;
-using System.Drawing;
+using System.IO;
 
 class Program
 {
@@ -8,10 +8,10 @@ class Program
         GoalManager manager = new GoalManager();
         bool running = true;
         string input;
+        // Console.Clear();
 
         while (running)
         {
-            Console.Clear();
             Console.WriteLine($"You have {manager.GetPoints()} points.");
             Console.WriteLine();
             DisplayMenu();
@@ -20,6 +20,7 @@ class Program
             switch (input)
             {
                 case("1"):
+                    Console.WriteLine();
                     DisplayGoalCreationMenu();
                     Console.Write("Which type of goal would you like to create? ");
                     input = Console.ReadLine();
@@ -66,8 +67,9 @@ class Program
                     }
                     break;
                 case("2"):
+                    Console.WriteLine();
                     Console.WriteLine("The goals are: ");
-                    manager.DisplayGoals();
+                    manager.ListGoals();
                     Console.WriteLine();
                     break;
                 case("3"):
@@ -76,7 +78,7 @@ class Program
                     manager.Save(input);
                     break;
                 case("4"):
-                    Console.Write("");
+                    Console.Write("What is the filename for the goal file? ");
                     input = Console.ReadLine();
                     try
                     {
@@ -89,7 +91,13 @@ class Program
                     }
                     break;
                 case("5"):
-                    
+                    manager.DisplayGoals();
+                    Console.Write("Which goal did you accomplish? ");
+                    input = Console.ReadLine();
+                    if(int.Parse(input) > 0 && int.Parse(input) <= manager.GetGoals().Count)
+                    {
+                        manager.RecordEvent(int.Parse(input) - 1);
+                    }
                     break;
                 case("6"):
                     running = false;

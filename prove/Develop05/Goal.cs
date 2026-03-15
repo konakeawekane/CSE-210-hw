@@ -13,10 +13,7 @@ public abstract class Goal
         _isCompleted = false;
     }
 
-    public virtual string SerializeGoal()
-    {
-        return $"Goal~{_goal}~{_description}~{_pointValue}~{_isCompleted}";
-    }
+    public abstract string SerializeGoal();
 
     public virtual string GetGoal()
     {
@@ -33,7 +30,7 @@ public abstract class Goal
 
     public virtual string GetFormatedGoal()
     {   
-        string check = GetIsComplete() ? " " : "X";
+        string check = GetIsComplete() ? "X" : " ";
         return $"[{check}] {_goal} ({_description})";
     }
 

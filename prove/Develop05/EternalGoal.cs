@@ -4,6 +4,11 @@ public class EternalGoal : Goal
 
     public override void RecordEvent(){}
 
+    public override string SerializeGoal()
+    {
+        return $"{GetGoal()}~{GetDescription()}~{GetPoints()}";
+    }
+
     public override bool GetIsComplete()
     {
         return false;
