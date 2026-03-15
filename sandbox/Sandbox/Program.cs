@@ -17,5 +17,10 @@ class Program
 
         Console.WriteLine(a1.getMoveType());
         Console.WriteLine(a2.GetDescription());
+        string grade = "A";
+        string responce = grade == "A" ? "Good job" : "Don't quit";
+        string responce2 = grade ?? "Dont quit";
+
+        
     }
 }
