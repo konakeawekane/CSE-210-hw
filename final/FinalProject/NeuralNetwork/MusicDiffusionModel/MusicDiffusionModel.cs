@@ -2,8 +2,13 @@ using NeuralNetwork.DataSet;
 
 namespace NeuralNetwork.MusicDiffusionModel;
 
-public class MusicDiffusionModel : NeuralNet
+public class MusicDiffusionModel : NeuralNet<double[]>
 {
+    public MusicDiffusionModel(string[] fileData)
+    {
+        throw new NotImplementedException();
+        ReBuildWeights();
+    }
 
     public void AddHiddenLayer(int size)
     {
@@ -11,7 +16,7 @@ public class MusicDiffusionModel : NeuralNet
         AddLayer("hidden", new Layer(size));
     }
 
-    public override string Evaluate()
+    public override double[] Evaluate(double[] input)
     {
         throw new NotImplementedException();
 
@@ -20,7 +25,7 @@ public class MusicDiffusionModel : NeuralNet
         // return the computed value
     }
 
-    public override void Train(int iterations, IDataSet dataSet)
+    public override void Train(int iterations, IDataSet<double[]> dataSet)
     {
         throw new NotImplementedException();
 
@@ -33,7 +38,17 @@ public class MusicDiffusionModel : NeuralNet
         // using the backpropagation algorithim apply corrective adjustments to each weight and bias 
     }
 
-    public override double Test(IDataSet dataSet)
+    public override double Test(IDataSet<double[]> dataSet)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override string Serialize()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Deserialize(string contents)
     {
         throw new NotImplementedException();
     }

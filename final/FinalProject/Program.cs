@@ -1,28 +1,37 @@
 using System;
-using System.Data;
+using System.IO;
 using NeuralNetwork;
 using NeuralNetwork.DataSet;
 using NeuralNetwork.LittleLanguageModel;
 using NeuralNetwork.LittleLanguageModel.AIContext;
+using NeuralNetwork.ClassificationModel;
+using NeuralNetwork.ImageDiffusionModel;
+using NeuralNetwork.MusicDiffusionModel;
 
 class Program
 {
     static bool isRunning = true;
     static string input;
     static List<string> modelNames = new List<string>{"Classification", "Language", "ImageDiffusion"," MusicDiffusion"};
-    static List<string> dataSetTypes = new List<string>{"Classification", "Speech", "Vocabulary", "Image", "Music"};
-    static List<bool> savedNeuralNetwork = new List<bool>();
+    static List<string> dataSetTypes = new List<string>{"Classification", "Language", "Image", "Music"};
+
+    static List<IDataSet<string>> languageDataSets = new List<IDataSet<string>>();
+    static List<IDataSet<double[]>> numericalDataSet = new List<IDataSet<double[]>>();
+    static List<NeuralNet<string>> languageNetworks = new List<NeuralNet<string>>();
+    static List<NeuralNet<double[]>> numaricalNetworks = new List<NeuralNet<double[]>>();
 
     static void Main(string[] args)
     {
-        List<DataSet> loadedDataSets = new List<DataSet>();
-        List<NeuralNet<string>> languageNetworks = new List<NeuralNet<string>>();
-        List<NeuralNet<double[]>> numaricalNetworks = new List<NeuralNet<double[]>>();
-
+        Console.Clear();
         Console.WriteLine("Welcome.");
+        Console.WriteLine();
+        Thread.Sleep(1000);
+
         while (isRunning)
         {
+            Console.Clear();
             Menu();
+            Thread.Sleep(1000);
         }
     }
 
@@ -34,35 +43,37 @@ class Program
         Console.WriteLine("   3) Run Items");
         Console.WriteLine("   4) Create Items");
         Console.WriteLine("   5) Quit Program");
-        Console.WriteLine("Enter the number of the option then press enter: ");
+        Console.Write("Enter the number of the option then press enter: ");
 
         input = Console.ReadLine();
+        Console.WriteLine();
 
         switch (input)
         {
             case("1"):
+                Console.Clear();
                 DispalyImportMenu();
                 break;
+
             case("2"):
+                Console.Clear();
                 DispalyExportMenu();
                 break;
+
             case("3"):
+                Console.Clear();
                 DispalyRunMenu();
                 break;
+
             case("4"):
+                Console.Clear();
                 DisplayCreateMenu();
                 break;
+
             case("5"):
-
-                // do a quick check of unsaved content and alert the user if any found
-                if (savedNeuralNetwork.Contains(false))
-                {
-                    
-                }
-                //get confirmation from the user
-
                 isRunning = false;
                 break;
+
             default:
                 Console.WriteLine("Invalid input");
                 break;
@@ -75,15 +86,16 @@ class Program
         Console.WriteLine("   1) Import Neural Network");
         Console.WriteLine("   2) Import DataSet");
         Console.WriteLine("   3) Back");
-        Console.WriteLine("Enter the number of the option then press enter: ");
+        Console.Write("Enter the number of the option then press enter: ");
 
         input = Console.ReadLine();
+        Console.Clear();
 
         switch (input)
         {
             case("1"):
-                Console.Write("(");
-                foreach(string name in modelNames){Console.Write(name);}
+                Console.Write("Valid Models - (");
+                foreach(string name in modelNames){Console.Write(name + ", ");}
                 Console.WriteLine(")");
 
                 Console.Write("Enter Network Model type: ");
@@ -93,8 +105,36 @@ class Program
                 {
                     Console.Write("Enter File Path: ");
                     string filePath = Console.ReadLine();
-                    // System would then import model report on status and return to main menu
-                    savedNeuralNetwork.Add(true);
+                    string[] fileData;
+
+                    // Read lines from file
+                    try
+                    {
+                        fileData = File.ReadAllLines(filePath);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Console.WriteLine("Error! File not found!");
+                        break;
+                    }
+                    
+                    // use a switch to create the needed model based on the declared type
+                    switch (modelToImport)
+                    {
+                        case("Classification"):
+                            numaricalNetworks.Add(new ClassificationModel(fileData));
+                            break;
+                        case("Language"):
+                            languageNetworks.Add(new LLM(fileData));
+                            break;
+                        case("ImageDiffusion"):
+                            numaricalNetworks.Add(new ImageDiffusionModel(fileData));
+                            break;
+                        case("MusicDiffusion"):
+                            numaricalNetworks.Add(new MusicDiffusionModel(fileData));
+                            break;
+                    }
+                    Console.WriteLine($"Successfully Imported {modelToImport} Network");
                 }
                 else
                 {
@@ -103,7 +143,7 @@ class Program
                 break;
 
             case("2"):
-                Console.Write("(");
+                Console.Write("Valid Types - (");
                 foreach(string type in dataSetTypes){Console.Write(type);}
                 Console.WriteLine(")");
 
@@ -114,7 +154,29 @@ class Program
                 {
                     Console.Write("Enter File Path: ");
                     string filePath = Console.ReadLine();
-                    // System would then import dataSet report on status and return to main menu
+                    
+                    // use a switch to create the needed model based on the declared type
+                    switch (dataSetType)
+                    {
+                        case("Classification"):
+                            numericalDataSet.Add(new ClassificationSet(filePath));
+                            break;
+                        case("Language"):
+                            languageDataSets.Add(new SpeachSet(filePath));
+                            break;
+                        case("Image"):
+                            numericalDataSet.Add(new ImageSet(filePath));
+                            break;
+                        case("Music"):
+                            numericalDataSet.Add(new MusicSet(filePath));
+                            break;
+                    }
+
+                    Console.WriteLine($"Successfully Imported {dataSetType} Data Set");
+                }
+                else
+                {
+                    Console.WriteLine("Invalid DataSet Type");
                 }
                 break;
 
@@ -133,9 +195,10 @@ class Program
         Console.WriteLine("   1) Export Neural Network");
         Console.WriteLine("   2) Export Vocabulary Embbeding Hash");
         Console.WriteLine("   3) Back");
-        Console.WriteLine("Enter the number of the option then press enter: ");
+        Console.Write("Enter the number of the option then press enter: ");
 
         input = Console.ReadLine();
+        Console.Clear();
 
         switch (input)
         {
@@ -166,9 +229,10 @@ class Program
         Console.WriteLine("   1) Train Neural Network");
         Console.WriteLine("   2) Use Neural Network");
         Console.WriteLine("   3) Back");
-        Console.WriteLine("Enter the number of the option then press enter: ");
+        Console.Write("Enter the number of the option then press enter: ");
 
         input = Console.ReadLine();
+        Console.Clear();
 
         switch (input)
         {
@@ -205,9 +269,10 @@ class Program
         Console.WriteLine("   3) Image Neural Network");
         Console.WriteLine("   4) Music Neural Network");
         Console.WriteLine("   5) Back");
-        Console.WriteLine("Enter the number of the option then press enter: ");
+        Console.Write("Enter the number of the option then press enter: ");
 
         input = Console.ReadLine();
+        Console.Clear();
 
         switch (input)
         {

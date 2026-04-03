@@ -1,7 +1,7 @@
 namespace NeuralNetwork.DataSet;
 using System.IO;
 
-public class MusicSet : IDataSet<string>
+public class MusicSet : IDataSet<double[]>
 {
     
     public MusicSet(string file)
@@ -15,14 +15,14 @@ public class MusicSet : IDataSet<string>
         
     }
 
-    public string GetCase(int index)
+    public double[] GetCase(int index)
     {
         throw new NotImplementedException();
 
         // return an item from data at the index packed into a string
     }
 
-    public string GetTruth(int index)
+    public double[] GetTruth(int index)
     {
         throw new NotImplementedException();
 

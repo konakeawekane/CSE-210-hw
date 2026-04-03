@@ -23,20 +23,11 @@ public class LLM : NeuralNet<string>
         _vocabulary = new EmbeddingHash(embeddingHashDimensions);
         ReBuildWeights();
     }
-    public LLM(int contextWindow, EmbeddingHash vocab) : 
-        base(new Dictionary<string, Layer>
-            {
-                { "input", new Layer(contextWindow * vocab.GetDimentions())},
-                { "output", new Layer(vocab.GetDimentions())}
-            }, new List<string>
-            {
-                "input",
-                "output"
-            }
-        )
+    public LLM(string[] fileData)
     {
-        _context = new Context(contextWindow);
-        _vocabulary = vocab;
+        throw new NotImplementedException();
+        _context = new Context(10);
+        _vocabulary = new EmbeddingHash(10);
         ReBuildWeights();
     }
 
@@ -81,5 +72,15 @@ public class LLM : NeuralNet<string>
         // calculate total network cost (inaccuracy)
 
         // return cost (inaccuracy) to be used for tuning the learn rate and evaluating learning progress
+    }
+
+    public override string Serialize()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Deserialize(string contents)
+    {
+        throw new NotImplementedException();
     }
 }

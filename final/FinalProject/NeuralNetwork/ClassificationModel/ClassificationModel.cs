@@ -1,6 +1,5 @@
-using NeuralNetwork.DataSet;
-
 namespace NeuralNetwork.ClassificationModel;
+using NeuralNetwork.DataSet;
 
 public class ClassificationModel : NeuralNet<double[]>
 {
@@ -20,6 +19,15 @@ public class ClassificationModel : NeuralNet<double[]>
         )
     {
         _classifications = classifications;
+        _learnRateRandom = 0;
+        ReBuildWeights();
+    }
+
+    public ClassificationModel(string[] fileData)
+    {
+        throw new NotImplementedException();
+        _classifications = new Dictionary<int, string>();
+        _learnRateRandom = 0;
         ReBuildWeights();
     }
 
@@ -78,5 +86,15 @@ public class ClassificationModel : NeuralNet<double[]>
         }
         
         return result;
+    }
+
+    public override string Serialize()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Deserialize(string contents)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -104,4 +104,8 @@ public abstract class NeuralNet<T>
     public abstract void Train(int iterations, IDataSet<T> dataSet);
 
     public abstract double Test(IDataSet<T> dataSet);
+
+    public abstract string Serialize();
+
+    public abstract void Deserialize(string contents);
 }
