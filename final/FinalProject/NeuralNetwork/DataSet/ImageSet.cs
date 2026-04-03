@@ -1,7 +1,7 @@
 namespace NeuralNetwork.DataSet;
 using System.IO;
 
-public class ImageSet : IDataSet
+public class ImageSet : IDataSet<string>
 {
     
     public ImageSet(string file)

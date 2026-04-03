@@ -1,7 +1,7 @@
 namespace NeuralNetwork.DataSet;
 using System.IO;
 
-public class VocabularySet : IDataSet
+public class VocabularySet : IDataSet<string>
 {
     private List<string> _compareListOne;
     private List<string> _compareListTwo;

@@ -1,8 +1,8 @@
 namespace NeuralNetwork.DataSet;
 
-public interface IDataSet
+public interface IDataSet<T>
 {
     void LoadFile(string file);
-    string GetCase(int index);
-    string GetTruth(int index);
+    T GetCase(int index);
+    T GetTruth(int index);
 }

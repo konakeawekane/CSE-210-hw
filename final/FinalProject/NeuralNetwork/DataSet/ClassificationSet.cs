@@ -1,7 +1,7 @@
 namespace NeuralNetwork.DataSet;
 using System.IO;
 
-public class ClassificationSet : IDataSet
+public class ClassificationSet : IDataSet<string[]>
 {
     //classification sets need cases with inputs that lead to one of many classifications (outputs)
     private List<double[]> _data;
@@ -44,17 +44,22 @@ public class ClassificationSet : IDataSet
         }
     }
 
-    public string GetCase(int index)
+    public string[] GetCase(int index)
     {
         throw new NotImplementedException();
 
         // return an item from data at the index packed into a string
     }
 
-    public string GetTruth(int index)
+    public string[] GetTruth(int index)
     {
         throw new NotImplementedException();
 
         // return an item drom the results at the index packed into a string
+    }
+
+    public int GetNumberOfCases()
+    {
+        return _data.Count;
     }
 }

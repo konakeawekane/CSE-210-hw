@@ -11,11 +11,13 @@ class Program
     static string input;
     static List<string> modelNames = new List<string>{"Classification", "Language", "ImageDiffusion"," MusicDiffusion"};
     static List<string> dataSetTypes = new List<string>{"Classification", "Speech", "Vocabulary", "Image", "Music"};
+    static List<bool> savedNeuralNetwork = new List<bool>();
 
     static void Main(string[] args)
     {
         List<DataSet> loadedDataSets = new List<DataSet>();
-        List<NeuralNet> loadedNeuralNetworks = new List<NeuralNet>();
+        List<NeuralNet<string>> languageNetworks = new List<NeuralNet<string>>();
+        List<NeuralNet<double[]>> numaricalNetworks = new List<NeuralNet<double[]>>();
 
         Console.WriteLine("Welcome.");
         while (isRunning)
@@ -53,7 +55,10 @@ class Program
             case("5"):
 
                 // do a quick check of unsaved content and alert the user if any found
-
+                if (savedNeuralNetwork.Contains(false))
+                {
+                    
+                }
                 //get confirmation from the user
 
                 isRunning = false;
@@ -81,7 +86,7 @@ class Program
                 foreach(string name in modelNames){Console.Write(name);}
                 Console.WriteLine(")");
 
-                Console.Write("Enter Model Name: ");
+                Console.Write("Enter Network Model type: ");
                 string modelToImport = Console.ReadLine();
 
                 if (modelNames.Contains(modelToImport))
@@ -89,6 +94,7 @@ class Program
                     Console.Write("Enter File Path: ");
                     string filePath = Console.ReadLine();
                     // System would then import model report on status and return to main menu
+                    savedNeuralNetwork.Add(true);
                 }
                 else
                 {
@@ -137,7 +143,7 @@ class Program
                 // show currently loaded Neural Networks letting the user specify which one to export
 
                 // Let the user specify the name of the file that every the network data will be exported to
-
+                // savedNeuralNetwork[0] = true;
                 break;
 
             case("2"):

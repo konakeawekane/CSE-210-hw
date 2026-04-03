@@ -2,7 +2,7 @@ namespace NeuralNetwork.LittleLanguageModel;
 using AIContext;
 using NeuralNetwork.DataSet;
 
-public class LLM : NeuralNet
+public class LLM : NeuralNet<string>
 {
     private Context _context;
     private EmbeddingHash _vocabulary;
@@ -40,7 +40,7 @@ public class LLM : NeuralNet
         ReBuildWeights();
     }
 
-    public override string Evaluate()
+    public override string Evaluate(string input)
     {
         throw new NotImplementedException();
 
@@ -49,7 +49,7 @@ public class LLM : NeuralNet
         
     }
 
-    public override void Train(int iterations, IDataSet dataSet)
+    public override void Train(int iterations, IDataSet<string> dataSet)
     {
         throw new NotImplementedException();
 
@@ -68,7 +68,7 @@ public class LLM : NeuralNet
         // use backpropogation algorithim to apply corrective adjustments (also based on learn rate)
     }
 
-    public override double Test(IDataSet dataSet)
+    public override double Test(IDataSet<string> dataSet)
     {
         throw new NotImplementedException();
 

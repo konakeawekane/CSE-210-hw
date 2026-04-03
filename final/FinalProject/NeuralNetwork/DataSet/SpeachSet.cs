@@ -1,7 +1,7 @@
 namespace NeuralNetwork.DataSet;
 using System.IO;
 
-public class SpeachSet : IDataSet
+public class SpeachSet : IDataSet<string>
 {
     private string _data;
     private List<string> _messages;
@@ -22,7 +22,7 @@ public class SpeachSet : IDataSet
 
     public string GetCase(int index)
     {
-        return _cases[index].ToString();
+        return _cases[index].ToString();       
     }
 
     public string GetTruth(int index)

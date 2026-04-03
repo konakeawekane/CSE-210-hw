@@ -2,7 +2,7 @@ namespace NeuralNetwork;
 using System.Collections.Generic;
 using DataSet;
 
-public abstract class NeuralNet
+public abstract class NeuralNet<T>
 {
     private Dictionary<string, Layer> _layers;
     private List<string> _executionOrder;
@@ -52,6 +52,11 @@ public abstract class NeuralNet
         return _layers;
     }
 
+    public List<Layer> GetAllJustLayers()
+    {
+        return _layers.Values.ToList();
+    }
+
     public List<string> GetExecutionOrder()
     {
         return _executionOrder;
@@ -74,20 +79,29 @@ public abstract class NeuralNet
         _layersDirtied = true;
     }
 
-    protected void Evaluate(string entry, string exit, double[] inputs)
+    protected void Process(string entry, string exit, double[] input)
     {
-        throw new NotImplementedException();
-        
         // Start executing where the entry point is in the execution order
+        int index = _executionOrder.IndexOf(entry);
+        string currentLayer;
+        string lastLayer = _executionOrder[index];
 
+        // Pass in inputs
+        GetLayer(lastLayer).SetNodes(input);
+        
         // Run through every layer and evaluate the node values
-
-        // Stop at the exit layer when reached or when the end of the execution order was reached (throw an error in the latter case)
+        while (index < _executionOrder.Count && !(_executionOrder[index] == exit))
+        {
+            index++;
+            currentLayer = _executionOrder[index];
+            _layers[currentLayer].Evaluate(_layers[lastLayer]);
+            lastLayer = currentLayer;
+        }    
     }
 
-    public abstract string Evaluate();
+    public abstract T Evaluate(T input);
 
-    public abstract void Train(int iterations, IDataSet dataSet);
+    public abstract void Train(int iterations, IDataSet<T> dataSet);
 
-    public abstract double Test(IDataSet dataSet);
+    public abstract double Test(IDataSet<T> dataSet);
 }
